@@ -9,18 +9,24 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Elephant extends Actor
 {
     GreenfootSound elephantSound = new GreenfootSound("elephantcub.mp3");
-    GreenfootImage[] idle = new GreenfootImage[8];
+    GreenfootImage[] idleRight = new GreenfootImage[8];
     int imageIndex = 0;
+    
+    //Direction the elephant is facing
+    String facing = "right";
+    
     /**
      * Constructor - The code that gets run one time when object is created
      */
     public Elephant() {
-        for(int i=0; i<8; i++)
+        for(int i=0; i<idleRight.length; i++)
         {
-            idle[i] = new GreenfootImage("elephant_idle/idle" + i + ".png");
-            idle[i].scale(50,50);
+            idleRight[i] = new GreenfootImage("elephant_idle/idle" + i + ".png");
+            idleRight[i].scale(50,50);
         }
-        setImage(idle[0]);
+        
+        //Inital elephant image
+        setImage(idleRight[0]);
     }
     
     /**
@@ -28,8 +34,13 @@ public class Elephant extends Actor
      */
     public void animateElephant()
     {
-        setImage(idle[imageIndex]);
-        imageIndex = (imageIndex + 1) % idle.length;
+        GreenfootImage current = new GreenfootImage(idleRight[imageIndex]);
+        if(facing.equals("left"))
+        {
+            current.mirrorHorizontally();
+        }
+        setImage(current);
+        imageIndex = (imageIndex + 1) % idleRight.length;
     }
     
     /**
@@ -42,10 +53,12 @@ public class Elephant extends Actor
         if(Greenfoot.isKeyDown("a"))
         {
             move(-3);
+            facing = "left";
         }
         else if(Greenfoot.isKeyDown("d"))
         {
             move(3);
+            facing = "right";
         }
         
         //Remove apple if elephant eats it
