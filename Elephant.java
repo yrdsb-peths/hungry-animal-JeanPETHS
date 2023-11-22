@@ -18,6 +18,7 @@ public class Elephant extends Actor
         for(int i=0; i<8; i++)
         {
             idle[i] = new GreenfootImage("elephant_idle/idle" + i + ".png");
+            idle[i].scale(50,50);
         }
         setImage(idle[0]);
     }
