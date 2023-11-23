@@ -8,6 +8,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Elephant extends Actor
 {
+    MyWorld world;
+
     GreenfootSound elephantSound = new GreenfootSound("elephantcub.mp3");
     GreenfootImage[] idleRight = new GreenfootImage[8];
     int imageIndex = 0;
@@ -72,11 +74,21 @@ public class Elephant extends Actor
             facing = "right";
         }
         
-        //Remove apple if elephant eats it
-        eat();
-        
         //Animate the elephant
         animateElephant();
+        
+        //Remove apple and knife if elephant eats it
+        if(isTouching(Apple.class) || isTouching(Knife.class))
+        {
+            eat();
+        }
+        
+        if(isTouching(Bomb.class))
+        {
+            removeTouching(Bomb.class);
+            world = (MyWorld) getWorld();
+            world.gameOver();
+        }
     }
     
     /**
@@ -84,13 +96,34 @@ public class Elephant extends Actor
      */
     public void eat()
     {
+        elephantSound.play();
+        
+        world = (MyWorld) getWorld();
+        //Remove the touching object
         if(isTouching(Apple.class))
         {
             removeTouching(Apple.class);
-            MyWorld world = (MyWorld) getWorld();
-            world.createApple();
             world.increaseScore();
-            elephantSound.play();
+        }
+        else
+        {
+            removeTouching(Knife.class);
+            world.decreaseScore();
+        }
+        
+        //Randomly put bomb or apple
+        int num = Greenfoot.getRandomNumber(6);
+        if(num==3)
+        {
+            world.createBomb();
+        }
+        else if(num==2)
+        {
+            world.createKnife();
+        }
+        else
+        {
+            world.createApple();
         }
     }
 }
