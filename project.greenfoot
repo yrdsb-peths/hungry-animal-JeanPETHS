@@ -133,5 +133,5 @@ target8.y=0
 version=3.1.0
 width=850
 world.lastInstantiated=TitleScreen
-xPosition=72
-yPosition=191
+xPosition=589
+yPosition=200

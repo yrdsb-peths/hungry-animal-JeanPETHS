@@ -11,6 +11,8 @@ public class Elephant extends Actor
     MyWorld world;
 
     GreenfootSound elephantSound = new GreenfootSound("elephantcub.mp3");
+    GreenfootSound bombSound = new GreenfootSound("bombExplosion.wav");
+    
     GreenfootImage[] idleRight = new GreenfootImage[8];
     int imageIndex = 0;
     
@@ -34,26 +36,6 @@ public class Elephant extends Actor
         
         //Inital elephant image
         setImage(idleRight[0]);
-    }
-    
-    /**
-     * Animate the elephant
-     */
-    public void animateElephant()
-    {
-        if(animationTimer.millisElapsed() < 100)
-        {
-            return;
-        }
-        animationTimer.mark();
-        
-        GreenfootImage current = new GreenfootImage(idleRight[imageIndex]);
-        if(facing.equals("left"))
-        {
-            current.mirrorHorizontally();
-        }
-        setImage(current);
-        imageIndex = (imageIndex + 1) % idleRight.length;
     }
     
     /**
@@ -85,10 +67,31 @@ public class Elephant extends Actor
         
         if(isTouching(Bomb.class))
         {
+            bombSound.play();
             removeTouching(Bomb.class);
             world = (MyWorld) getWorld();
             world.gameOver();
         }
+    }
+    
+    /**
+     * Animate the elephant
+     */
+    public void animateElephant()
+    {
+        if(animationTimer.millisElapsed() < 100)
+        {
+            return;
+        }
+        animationTimer.mark();
+        
+        GreenfootImage current = new GreenfootImage(idleRight[imageIndex]);
+        if(facing.equals("left"))
+        {
+            current.mirrorHorizontally();
+        }
+        setImage(current);
+        imageIndex = (imageIndex + 1) % idleRight.length;
     }
     
     /**

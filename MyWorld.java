@@ -8,6 +8,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class MyWorld extends World
 {
+    GreenfootSound gameOverSound = new GreenfootSound("gameOverTrombone.wav");
+    
     Apple apple;
     Knife knife;
     Bomb bomb;
@@ -37,6 +39,7 @@ public class MyWorld extends World
      */
     public void gameOver()
     {
+        gameOverSound.play();
         removeObject(apple);
         Label gameOverLabel = new Label("Game Over", 100);
         addObject(gameOverLabel, 300, 200);
