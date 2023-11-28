@@ -8,7 +8,6 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Knife extends Actor
 {
-    MyWorld world;
     int speed;
     /**
      * Act - do whatever the Knife wants to do. This method is called whenever
@@ -18,7 +17,7 @@ public class Knife extends Actor
     {
         setLocation(getX(), getY() + speed);
         
-        world = (MyWorld) getWorld();
+        MyWorld world = (MyWorld) getWorld();
         if(getY()>=world.getHeight())
         {
             world.removeObject(this);

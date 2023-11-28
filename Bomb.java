@@ -8,7 +8,6 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Bomb extends Actor
 {
-    MyWorld world;
     int speed;
     /**
      * Act - do whatever the Bomb wants to do. This method is called whenever
@@ -20,7 +19,7 @@ public class Bomb extends Actor
         setLocation(getX(), getY()+speed);
         
         //Remove apple & draw game over when apple gets to bottom
-        world = (MyWorld) getWorld();
+        MyWorld world = (MyWorld) getWorld();
         if(getY()>=world.getHeight())
         {
             world.removeObject(this);
