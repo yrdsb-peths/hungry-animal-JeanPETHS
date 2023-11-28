@@ -39,7 +39,9 @@ public class Elephant extends Actor
     }
     
     public void addedToWorld(World w) {
-        this.world = (MyWorld) getWorld();
+        if(w instanceof MyWorld) {
+            this.world = (MyWorld) w;
+        }
     }
     
     /**
