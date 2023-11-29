@@ -9,6 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class MyWorld extends World
 {
     GreenfootSound gameOverSound = new GreenfootSound("gameOverTrombone.wav");
+    SimpleTimer animationTimer;
     
     Apple apple;
     Knife knife;
@@ -45,11 +46,28 @@ public class MyWorld extends World
         addObject(gameOverLabel, 300, 200);
     }
     
+    //Are not working
+    public void plusOneAnimation()
+    {
+        Label plusOneLabel = new Label("+1", 40);
+        addObject(plusOneLabel, 60, 50);
+        
+        animationTimer = new SimpleTimer();
+        animationTimer.mark();
+        /*
+        while(animationTimer.millisElapsed() < 100) {
+            plusOneLabel.setLocation(plusOneLabel.getX(), plusOneLabel.getY()-1);
+        }
+        
+        removeObject(plusOneLabel);*/
+    }
+    
     /**
      * Increase score
      */
     public void increaseScore()
     {
+        plusOneAnimation();
         score++;
         scoreLabel.setValue(score);
         
