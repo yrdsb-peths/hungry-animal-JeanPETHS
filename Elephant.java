@@ -38,9 +38,10 @@ public class Elephant extends Actor
         setImage(idleRight[0]);
     }
     
-    public void addedToWorld(World w) {
-        if(w instanceof MyWorld) {
-            this.world = (MyWorld) w;
+    //Get the current world the elephant is in
+    public void addedToWorld(World world) {
+        if(world instanceof MyWorld) {
+            this.world = (MyWorld) world;
         }
     }
     
@@ -50,7 +51,7 @@ public class Elephant extends Actor
      */
     public void act()
     {
-        // Add your action code here.
+        //Move the elephant left & right
         if(Greenfoot.isKeyDown("a"))
         {
             move(-3);
@@ -71,6 +72,7 @@ public class Elephant extends Actor
             eat();
         }
         
+        //Remove bomb and game over if elephant eats it
         if(isTouching(Bomb.class))
         {
             bombSound.play();
@@ -85,12 +87,15 @@ public class Elephant extends Actor
      */
     public void animateElephant()
     {
+        //If the time is too short, do not animate.
         if(animationTimer.millisElapsed() < 100)
         {
             return;
         }
+        
         animationTimer.mark();
         
+        //Set the image based on the direction the elephant is facing
         GreenfootImage current = new GreenfootImage(idleRight[imageIndex]);
         if(facing.equals("left"))
         {
@@ -107,7 +112,6 @@ public class Elephant extends Actor
     {
         elephantSound.play();
         
-        world = (MyWorld) getWorld();
         //Remove the touching object
         if(isTouching(Apple.class))
         {
@@ -120,19 +124,7 @@ public class Elephant extends Actor
             world.decreaseScore();
         }
         
-        //Randomly put bomb or apple
-        int num = Greenfoot.getRandomNumber(6);
-        if(num==3)
-        {
-            world.createBomb();
-        }
-        else if(num==2)
-        {
-            world.createKnife();
-        }
-        else
-        {
-            world.createApple();
-        }
+        //Randomly put apple, knife, bomb at random location at top of screen
+        world.createRandom();
     }
 }

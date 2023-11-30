@@ -27,7 +27,7 @@ public class MyWorld extends World
         Elephant elephant = new Elephant();
         addObject(elephant, 300, 300);
         
-        //Create a label
+        //Create a score label
         scoreLabel = new Label(score, 80);
         addObject(scoreLabel,50,50);
         
@@ -45,12 +45,18 @@ public class MyWorld extends World
         addObject(gameOverLabel, 300, 200);
     }
     
+    /**
+     * Animate the "+1" when there is a change in score
+     */
     public void plusOneAnimation()
     {
         AnimatedLabel plusOneLabel = new AnimatedLabel("+1", 30);
         addObject(plusOneLabel, 70, 50);
     }
     
+    /**
+     * Animate the "-1" when there is a change in score
+     */
     public void minusOneAnimation()
     {
         AnimatedLabel plusOneLabel = new AnimatedLabel("-1", 30);
@@ -66,6 +72,7 @@ public class MyWorld extends World
         score++;
         scoreLabel.setValue(score);
         
+        //Level up every 5 points
         if(score%5==0)
         {
             level++;
@@ -103,12 +110,32 @@ public class MyWorld extends World
     }
     
     /**
-     * Create a new bomb at random time at top of screen
+     * Create a new bomb at random location at top of screen
      */
     public void createBomb()
     {
         bomb = new Bomb();
         bomb.setSpeed(level);
         addObject(bomb, Greenfoot.getRandomNumber(600), 0);
+    }
+    
+    /**
+     * Randomly put apple, knife, bomb at random location at top of screen
+     */
+    public void createRandom()
+    {
+        int num = Greenfoot.getRandomNumber(6);
+        if(num==3)
+        {
+            createBomb();
+        }
+        else if(num==2)
+        {
+            createKnife();
+        }
+        else
+        {
+            createApple();
+        }
     }
 }

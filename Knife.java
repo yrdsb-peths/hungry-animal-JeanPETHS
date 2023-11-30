@@ -17,11 +17,12 @@ public class Knife extends Actor
     {
         setLocation(getX(), getY() + speed);
         
+        //Remove knife & create apple or knife or bomb when knife gets to bottom
         MyWorld world = (MyWorld) getWorld();
         if(getY()>=world.getHeight())
         {
             world.removeObject(this);
-            world.createApple();
+            world.createRandom();
         }
     }
     
