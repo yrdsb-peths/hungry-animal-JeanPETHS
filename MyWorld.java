@@ -9,7 +9,6 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class MyWorld extends World
 {
     GreenfootSound gameOverSound = new GreenfootSound("gameOverTrombone.wav");
-    SimpleTimer animationTimer;
     
     Apple apple;
     Knife knife;
