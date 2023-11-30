@@ -45,11 +45,24 @@ public class MyWorld extends World
         addObject(gameOverLabel, 300, 200);
     }
     
+    public void plusOneAnimation()
+    {
+        AnimatedLabel plusOneLabel = new AnimatedLabel("+1", 30);
+        addObject(plusOneLabel, 70, 50);
+    }
+    
+    public void minusOneAnimation()
+    {
+        AnimatedLabel plusOneLabel = new AnimatedLabel("-1", 30);
+        addObject(plusOneLabel, 70, 50);
+    }
+    
     /**
      * Increase score
      */
     public void increaseScore()
     {
+        plusOneAnimation();
         score++;
         scoreLabel.setValue(score);
         
@@ -64,6 +77,7 @@ public class MyWorld extends World
      */
     public void decreaseScore()
     {
+        minusOneAnimation();
         score--;
         scoreLabel.setValue(score);
     }
