@@ -26,8 +26,16 @@ The falling of the objects will be **faster and faster** after every 5 points yo
 ### Score
 1. Eat **apple**: +1 point
 2. Eat **knife**: -1 point
+3. Eat **speed-up**: +1 speed
+4. Eat **speed-down**: -1 speed
 3. Eat **bomb**: Game Over!!!
 4. Apple falls to **bottom**: Game Over!!!
 
 ### Mission
-Get as many points as you can
+Get as many points as you can!
+
+### Hints
+- Speeding up is not always a good thing. The elephant becomes harder to control.
+- Never lose an apple!! Never touch a bomb!!
+- Luck is one of the factors that determines your score.
+- Be calm!
