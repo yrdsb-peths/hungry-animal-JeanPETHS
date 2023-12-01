@@ -9,17 +9,19 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Elephant extends Actor
 {
     MyWorld world;
+    SimpleTimer animationTimer;
 
     GreenfootSound elephantSound = new GreenfootSound("elephantcub.mp3");
     GreenfootSound bombSound = new GreenfootSound("bombExplosion.wav");
     
+    //Elephant animation images
     GreenfootImage[] idleRight = new GreenfootImage[8];
     int imageIndex = 0;
     
+    int speedElephant = 2;
+    
     //Direction the elephant is facing
     String facing = "right";
-    
-    SimpleTimer animationTimer;
     
     /**
      * Constructor - The code that gets run one time when object is created
@@ -54,20 +56,20 @@ public class Elephant extends Actor
         //Move the elephant left & right
         if(Greenfoot.isKeyDown("a"))
         {
-            move(-3);
+            move(-speedElephant);
             facing = "left";
         }
         else if(Greenfoot.isKeyDown("d"))
         {
-            move(3);
+            move(speedElephant);
             facing = "right";
         }
         
         //Animate the elephant
         animateElephant();
         
-        //Remove apple and knife if elephant eats it
-        if(isTouching(Apple.class) || isTouching(Knife.class))
+        //Remove apple, knife, speed-up, speed-down if elephant eats it
+        if(isTouching(Apple.class) || isTouching(Knife.class) || isTouching(SpeedUp.class) || isTouching(SpeedDown.class))
         {
             eat();
         }
@@ -106,7 +108,7 @@ public class Elephant extends Actor
     }
     
     /**
-     * Eat the apple and spawn new apple if an apple is eaten
+     * Eat apple, knife, speed-up, speed-down, and spawn new objects if anything is eaten
      */
     public void eat()
     {
@@ -118,13 +120,25 @@ public class Elephant extends Actor
             removeTouching(Apple.class);
             world.increaseScore();
         }
-        else
+        else if(isTouching(Knife.class))
         {
             removeTouching(Knife.class);
             world.decreaseScore();
         }
+        else if(isTouching(SpeedUp.class))
+        {
+            removeTouching(SpeedUp.class);
+            speedElephant++;
+            world.setSpeedLabel(speedElephant);
+        }
+        else
+        {
+            removeTouching(SpeedDown.class);
+            speedElephant--;
+            world.setSpeedLabel(speedElephant);
+        }
         
-        //Randomly put apple, knife, bomb at random location at top of screen
+        //Randomly put apple, knife, bomb, speed-up, speed-down at random location at top of screen
         world.createRandom();
     }
 }
