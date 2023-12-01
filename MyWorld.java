@@ -177,7 +177,7 @@ public class MyWorld extends World
      */
     public void createRandom()
     {
-        int num = Greenfoot.getRandomNumber(8);
+        int num = Greenfoot.getRandomNumber(10);
         if(num==3)
         {
             createBomb();
