@@ -13,9 +13,17 @@ public class MyWorld extends World
     Apple apple;
     Knife knife;
     Bomb bomb;
+    SpeedUp speedUp;
+    SpeedDown speedDown;
+    
     public int score = 0;
     Label scoreLabel;
+    
     int level = 1;
+    Label levelLabel;
+    
+    Label speedLabel;
+    
     /**
      * Constructor for objects of class MyWorld.
      * 
@@ -27,11 +35,19 @@ public class MyWorld extends World
         Elephant elephant = new Elephant();
         addObject(elephant, 300, 300);
         
-        //Create a label
+        //Create a score label
         scoreLabel = new Label(score, 80);
         addObject(scoreLabel,50,50);
         
-        createApple();
+        //Create a level label
+        levelLabel = new Label("Level: " + level, 30);
+        addObject(levelLabel,535,30);
+        
+        //Create a speed label
+        speedLabel = new Label("Speed: " + elephant.speedElephant, 30);
+        addObject(speedLabel,538,55);
+        
+        createRandom();
     }
     
     /**
@@ -45,12 +61,18 @@ public class MyWorld extends World
         addObject(gameOverLabel, 300, 200);
     }
     
+    /**
+     * Animate the "+1" when there is a change in score
+     */
     public void plusOneAnimation()
     {
         AnimatedLabel plusOneLabel = new AnimatedLabel("+1", 30);
         addObject(plusOneLabel, 70, 50);
     }
     
+    /**
+     * Animate the "-1" when there is a change in score
+     */
     public void minusOneAnimation()
     {
         AnimatedLabel plusOneLabel = new AnimatedLabel("-1", 30);
@@ -66,9 +88,11 @@ public class MyWorld extends World
         score++;
         scoreLabel.setValue(score);
         
+        //Level up every 5 points
         if(score%5==0)
         {
             level++;
+            setLevelLabel();
         }
     }
     
@@ -80,6 +104,22 @@ public class MyWorld extends World
         minusOneAnimation();
         score--;
         scoreLabel.setValue(score);
+    }
+    
+    /**
+     * Set value of Level Label
+     */
+    public void setLevelLabel()
+    {
+        levelLabel.setValue("Level: " + level);
+    }
+    
+    /**
+     * Set value of Speed Label
+     */
+    public void setSpeedLabel(int speedElephant)
+    {
+        speedLabel.setValue("Speed: " + speedElephant);
     }
     
     /**
@@ -103,12 +143,60 @@ public class MyWorld extends World
     }
     
     /**
-     * Create a new bomb at random time at top of screen
+     * Create a new bomb at random location at top of screen
      */
     public void createBomb()
     {
         bomb = new Bomb();
         bomb.setSpeed(level);
         addObject(bomb, Greenfoot.getRandomNumber(600), 0);
+    }
+    
+    /**
+     * Create a new speed-up at random location at top of screen
+     */
+    public void createSpeedUp()
+    {
+        speedUp = new SpeedUp();
+        speedUp.setSpeed(level);
+        addObject(speedUp, Greenfoot.getRandomNumber(600), 0);
+    }
+    
+    /**
+     * Create a new speed-down at random location at top of screen
+     */
+    public void createSpeedDown()
+    {
+        speedDown = new SpeedDown();
+        speedDown.setSpeed(level);
+        addObject(speedDown, Greenfoot.getRandomNumber(600), 0);
+    }
+    
+    /**
+     * Randomly put apple, knife, bomb, speed-up at random location at top of screen
+     */
+    public void createRandom()
+    {
+        int num = Greenfoot.getRandomNumber(8);
+        if(num==3)
+        {
+            createBomb();
+        }
+        else if(num==2)
+        {
+            createKnife();
+        }
+        else if(num==4)
+        {
+            createSpeedUp();
+        }
+        else if(num==5)
+        {
+            createSpeedDown();
+        }
+        else
+        {
+            createApple();
+        }
     }
 }

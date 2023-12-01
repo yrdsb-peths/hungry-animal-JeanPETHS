@@ -9,17 +9,19 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Elephant extends Actor
 {
     MyWorld world;
+    SimpleTimer animationTimer;
 
     GreenfootSound elephantSound = new GreenfootSound("elephantcub.mp3");
     GreenfootSound bombSound = new GreenfootSound("bombExplosion.wav");
     
+    //Elephant animation images
     GreenfootImage[] idleRight = new GreenfootImage[8];
     int imageIndex = 0;
     
+    int speedElephant = 2;
+    
     //Direction the elephant is facing
     String facing = "right";
-    
-    SimpleTimer animationTimer;
     
     /**
      * Constructor - The code that gets run one time when object is created
@@ -38,9 +40,10 @@ public class Elephant extends Actor
         setImage(idleRight[0]);
     }
     
-    public void addedToWorld(World w) {
-        if(w instanceof MyWorld) {
-            this.world = (MyWorld) w;
+    //Get the current world the elephant is in
+    public void addedToWorld(World world) {
+        if(world instanceof MyWorld) {
+            this.world = (MyWorld) world;
         }
     }
     
@@ -50,27 +53,28 @@ public class Elephant extends Actor
      */
     public void act()
     {
-        // Add your action code here.
+        //Move the elephant left & right
         if(Greenfoot.isKeyDown("a"))
         {
-            move(-3);
+            move(-speedElephant);
             facing = "left";
         }
         else if(Greenfoot.isKeyDown("d"))
         {
-            move(3);
+            move(speedElephant);
             facing = "right";
         }
         
         //Animate the elephant
         animateElephant();
         
-        //Remove apple and knife if elephant eats it
-        if(isTouching(Apple.class) || isTouching(Knife.class))
+        //Remove apple, knife, speed-up, speed-down if elephant eats it
+        if(isTouching(Apple.class) || isTouching(Knife.class) || isTouching(SpeedUp.class) || isTouching(SpeedDown.class))
         {
             eat();
         }
         
+        //Remove bomb and game over if elephant eats it
         if(isTouching(Bomb.class))
         {
             bombSound.play();
@@ -85,12 +89,15 @@ public class Elephant extends Actor
      */
     public void animateElephant()
     {
+        //If the time is too short, do not animate.
         if(animationTimer.millisElapsed() < 100)
         {
             return;
         }
+        
         animationTimer.mark();
         
+        //Set the image based on the direction the elephant is facing
         GreenfootImage current = new GreenfootImage(idleRight[imageIndex]);
         if(facing.equals("left"))
         {
@@ -101,38 +108,37 @@ public class Elephant extends Actor
     }
     
     /**
-     * Eat the apple and spawn new apple if an apple is eaten
+     * Eat apple, knife, speed-up, speed-down, and spawn new objects if anything is eaten
      */
     public void eat()
     {
         elephantSound.play();
         
-        world = (MyWorld) getWorld();
         //Remove the touching object
         if(isTouching(Apple.class))
         {
             removeTouching(Apple.class);
             world.increaseScore();
         }
-        else
+        else if(isTouching(Knife.class))
         {
             removeTouching(Knife.class);
             world.decreaseScore();
         }
-        
-        //Randomly put bomb or apple
-        int num = Greenfoot.getRandomNumber(6);
-        if(num==3)
+        else if(isTouching(SpeedUp.class))
         {
-            world.createBomb();
-        }
-        else if(num==2)
-        {
-            world.createKnife();
+            removeTouching(SpeedUp.class);
+            speedElephant++;
+            world.setSpeedLabel(speedElephant);
         }
         else
         {
-            world.createApple();
+            removeTouching(SpeedDown.class);
+            speedElephant--;
+            world.setSpeedLabel(speedElephant);
         }
+        
+        //Randomly put apple, knife, bomb, speed-up, speed-down at random location at top of screen
+        world.createRandom();
     }
 }

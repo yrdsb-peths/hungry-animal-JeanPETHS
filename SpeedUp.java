@@ -1,32 +1,34 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Food for our elephant.
+ * An object that can make the elephant speed up.
  * 
  * @author Jean 
  * @version Nov 2023
  */
-public class Apple extends Actor
+public class SpeedUp extends Actor
 {
     int speed;
+    
     /**
-     * Act - do whatever the Apple wants to do. This method is called whenever
+     * Act - do whatever the Speed wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     public void act()
     {
         setLocation(getX(), getY()+speed);
-        
-        //Remove apple & draw game over when apple gets to bottom
+ 
+        //Remove speed-up & create apple or knife or bomb or speed-up when speed-up gets to bottom
         MyWorld world = (MyWorld) getWorld();
         if(getY()>=world.getHeight())
         {
-            world.gameOver();
+            world.removeObject(this);
+            world.createRandom();
         }
     }
     
-    public void setSpeed(int speed)
+    public void setSpeed(int spd)
     {
-        this.speed = speed;
+        this.speed = spd;
     }
 }
