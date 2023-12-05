@@ -23,6 +23,11 @@ public class Elephant extends Actor
     //Direction the elephant is facing
     String facing = "right";
     
+    boolean isJumping = false;
+    static final private int initialSpeed = 20;
+    static final private int gravity = 2;
+    int velocity;
+    
     /**
      * Constructor - The code that gets run one time when object is created
      */
@@ -65,6 +70,24 @@ public class Elephant extends Actor
             facing = "right";
         }
         
+        //Check if the elephant can jump
+        if(Greenfoot.isKeyDown("w") && isOnGround() && !isJumping)
+        {
+            isJumping = true;
+            velocity = initialSpeed;
+        }
+        
+        //Make the elephant jump
+        if(isJumping) {
+            setLocation(getX(), getY()-velocity);
+            velocity -= gravity;
+            if(isOnGround()) {
+                velocity = 0;
+                setLocation(getX(), 300);
+                isJumping = false;
+            }
+        }
+        
         //Animate the elephant
         animateElephant();
         
@@ -82,6 +105,10 @@ public class Elephant extends Actor
             world = (MyWorld) getWorld();
             world.gameOver();
         }
+    }
+    
+    public boolean isOnGround() {
+        return getY() == 300;
     }
     
     /**
