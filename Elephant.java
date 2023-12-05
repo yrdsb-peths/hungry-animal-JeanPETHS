@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author Jean 
  * @version Nov 2023
  */
-public class Elephant extends Actor
+public class Elephant extends Jump
 {
     MyWorld world;
     SimpleTimer animationTimer;
@@ -63,6 +63,10 @@ public class Elephant extends Actor
         {
             move(speedElephant);
             facing = "right";
+        }
+        else if(Greenfoot.isKeyDown("w") && onGround())
+        {
+            jump(); //editing........
         }
         
         //Animate the elephant
