@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author Jean 
  * @version Nov 2023
  */
-public class Elephant extends Jump
+public class Elephant extends Actor
 {
     MyWorld world;
     SimpleTimer animationTimer;
@@ -22,6 +22,11 @@ public class Elephant extends Jump
     
     //Direction the elephant is facing
     String facing = "right";
+    
+    boolean isJumping = false;
+    static final private int initialSpeed = 20;
+    static final private int gravity = 2;
+    int velocity;
     
     /**
      * Constructor - The code that gets run one time when object is created
@@ -64,9 +69,23 @@ public class Elephant extends Jump
             move(speedElephant);
             facing = "right";
         }
-        else if(Greenfoot.isKeyDown("w") && onGround())
+        
+        //Check if the elephant can jump
+        if(Greenfoot.isKeyDown("w") && isOnGround() && !isJumping)
         {
-            jump(); //editing........
+            isJumping = true;
+            velocity = initialSpeed;
+        }
+        
+        //Make the elephant jump
+        if(isJumping) {
+            setLocation(getX(), getY()-velocity);
+            velocity -= gravity;
+            if(isOnGround()) {
+                velocity = 0;
+                setLocation(getX(), 300);
+                isJumping = false;
+            }
         }
         
         //Animate the elephant
@@ -86,6 +105,10 @@ public class Elephant extends Jump
             world = (MyWorld) getWorld();
             world.gameOver();
         }
+    }
+    
+    public boolean isOnGround() {
+        return getY() == 300;
     }
     
     /**
