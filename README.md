@@ -18,7 +18,7 @@ This particular repository is the starting template for the Hungry Elephant tuto
 
 ### How to Play
 1. Press *space* to start
-2. Use *"a"* to move left, *"d"* to move right
+2. Use *"a"* to move left, *"d"* to move right, *"w"* to jump
 3. Use your elephant to touch objects to eat
 
 The falling of the objects will be **faster and faster** after every 5 points you get!
