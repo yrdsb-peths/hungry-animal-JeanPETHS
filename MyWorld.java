@@ -93,6 +93,7 @@ public class MyWorld extends World
         {
             level++;
             setLevelLabel();
+            
         }
     }
     
@@ -181,10 +182,18 @@ public class MyWorld extends World
         if(num==3)
         {
             createBomb();
+            if(score > 5)
+            {
+                createBomb();
+            }
         }
         else if(num==2)
         {
             createKnife();
+            if(score > 5)
+            {
+                createKnife();
+            }
         }
         else if(num==4)
         {
@@ -193,6 +202,10 @@ public class MyWorld extends World
         else if(num==5)
         {
             createSpeedDown();
+            if(score > 5)
+            {
+                createSpeedDown();
+            }
         }
         else
         {
